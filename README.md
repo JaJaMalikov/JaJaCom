@@ -31,7 +31,7 @@ python main.py
 
 ## 📸 Capture d'écran
 
-*Ajoutez ici une capture d'écran sympa de l'interface !*
+![image](https://github.com/user-attachments/assets/37ce4945-6892-40f9-a114-6983b9dce964)
 
 ## 🛠️ À venir
 

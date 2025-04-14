@@ -1,0 +1,19 @@
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environnements virtuels
+.venv/
+jajacom_env/
+*.env
+
+# Fichiers spécifiques à l'OS
+.DS_Store
+Thumbs.db
+
+# Fichiers de config IDE
+.vscode/
+.idea/
+*.code-workspace
+

@@ -1,8 +1,9 @@
-### Fichier : core/serial_worker.py
+# Fichier : core/serial_worker.py
 
-from PySide6.QtCore import QObject, Signal, QThread
+from PySide6.QtCore import QObject, Signal
 import serial
 import threading
+
 
 class SerialWorker(QObject):
     line_received = Signal(str)
@@ -42,7 +43,11 @@ class SerialWorker(QObject):
         while self.running and self.ser:
             try:
                 if self.ser.in_waiting:
-                    line = self.ser.readline().decode('utf-8', errors='replace').strip()
+                    line = (
+                        self.ser.readline()
+                        .decode("utf-8", errors="replace")
+                        .strip()
+                    )
                     self.line_received.emit(line)
             except Exception as e:
                 self.line_received.emit(f"[Erreur lecture] {e}")

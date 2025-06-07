@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QComboBox
 
+
 class RefreshableComboBox(QComboBox):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -12,4 +13,3 @@ class RefreshableComboBox(QComboBox):
         if self.refresh_callback:
             self.refresh_callback()
         super().showPopup()
-

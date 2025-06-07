@@ -1,14 +1,13 @@
-### Fichier : ui/main_window.py
+# Fichier : ui/main_window.py
 
 from PySide6.QtWidgets import (
     QWidget, QMainWindow, QTextEdit, QVBoxLayout, QHBoxLayout, QPushButton,
     QComboBox, QLabel, QLineEdit, QCheckBox
 )
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import QTimer
 from core.serial_worker import SerialWorker
 import serial.tools.list_ports
 from ui.custom_widgets import RefreshableComboBox
-from datetime import datetime  # tout en haut du fichier si pas déjà fait
 
 
 class MainWindow(QMainWindow):
@@ -21,13 +20,21 @@ class MainWindow(QMainWindow):
         # --- Widgets principaux ---
         self.text_area = QTextEdit()
         self.text_area.setReadOnly(True)
-        self.text_area.setStyleSheet("background-color: #111; color: #eee; font-family: monospace;")
+        self.text_area.setStyleSheet(
+            "background-color: #111; color: #eee; font-family: monospace;"
+        )
 
         self.port_combo = RefreshableComboBox()
         self.port_combo.set_refresh_callback(self.refresh_ports)
 
         self.baud_combo = QComboBox()
-        self.baud_combo.addItems(["9600", "19200", "38400", "57600", "115200"])
+        self.baud_combo.addItems([
+            "9600",
+            "19200",
+            "38400",
+            "57600",
+            "115200",
+        ])
         self.baud_combo.setCurrentText("115200")
 
         self.refresh_ports()
@@ -84,7 +91,6 @@ class MainWindow(QMainWindow):
             self.reconnect_timer.stop()
             self.display_line("[Reconnexion automatique désactivée]")
 
-
     def refresh_ports(self):
         current = self.port_combo.currentText()
         self.port_combo.clear()
@@ -94,7 +100,7 @@ class MainWindow(QMainWindow):
         if current in ports:
             self.port_combo.setCurrentText(current)
         else:
-        # Choisir un port par défaut hors /dev/ttySx
+            # Choisir un port par défaut hors /dev/ttySx
             for p in ports:
                 if not p.startswith("/dev/ttyS"):
                     self.port_combo.setCurrentText(p)
@@ -155,7 +161,11 @@ class MainWindow(QMainWindow):
         line_lower = line.lower()
         if "error" in line_lower or "erreur" in line_lower:
             color = "#ff5555"  # Rouge
-        elif "ok" in line_lower or "succès" in line_lower or "connecté" in line_lower:
+        elif (
+            "ok" in line_lower
+            or "succès" in line_lower
+            or "connecté" in line_lower
+        ):
             color = "#50fa7b"  # Vert
         elif "avertissement" in line_lower or "warn" in line_lower:
             color = "#f1fa8c"  # Jaune
@@ -175,4 +185,3 @@ class MainWindow(QMainWindow):
     # Application du HTML final
         html = f'{time_html} <span style="color:{color};">{line}</span>'
         self.text_area.append(html)
-
